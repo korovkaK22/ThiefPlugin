@@ -1,0 +1,4 @@
+name: ThiefPlugins
+version: '${version}'
+main: thiefplugin.thiefplugin.ThiefPlugin
+api-version: 1.19
