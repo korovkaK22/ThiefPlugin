@@ -4,7 +4,6 @@ package events;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.Server;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -18,22 +17,21 @@ import org.bukkit.potion.PotionEffectType;
 import thiefplugin.thiefplugin.ThiefPlugin;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
 
 
-public class Events implements Listener {
+public class PigThiefEvents implements Listener {
     private final String noEscape = "Sit here!";
     private final String newVictim = "Oh no, you were stolen!";
     private final String successThief = "You have successful steal";
     private final ThiefPlugin plugin;
-    LinkedList<String> sittingPlayers;
+   // LinkedList<String> sittingPlayers;
     Map<String, Pig> pigsByPlayers;
 
-    public Events(ThiefPlugin plugin) {
+    public PigThiefEvents(ThiefPlugin plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
         this.plugin = plugin;
-        this.sittingPlayers = new LinkedList<>();
+      //  this.sittingPlayers = new LinkedList<>();
         this.pigsByPlayers= new HashMap<>();
     }
 
@@ -41,16 +39,13 @@ public class Events implements Listener {
     //Початок викрадення
     @EventHandler
     private void thiefPlayer(PlayerInteractAtEntityEvent event) {
-
-        if (sittingPlayers.contains(event.getPlayer().getName())) {
+        if (pigsByPlayers.containsKey(event.getPlayer().getName())) {
             //отмена евенту
-            Bukkit.broadcastMessage("interuct reset");//=========
             event.getPlayer().sendMessage(ChatColor.RED + noEscape);
             event.setCancelled(true);
- Bukkit.broadcastMessage( event.getPlayer().getVehicle()==null? "null":  //===========
-         event.getPlayer().getVehicle().toString());//================
-            return;
+             return;
         }
+
 
         if (!(event.getPlayer().getInventory().getItemInMainHand().getType() == Material.NETHERITE_SWORD)) {
             return;
@@ -94,9 +89,7 @@ public class Events implements Listener {
     //Вихід гравця
     @EventHandler
     private void quitPlayer(PlayerQuitEvent event) {
-        sittingPlayers.remove(event.getPlayer().getName());
-        Player player =event.getPlayer();
-        pigsByPlayers.get(player.getName()).addPassenger(player);
+
     }
 
 
@@ -107,13 +100,37 @@ public class Events implements Listener {
             return;
         }
 
-        if (sittingPlayers.contains(player.getName()) && event.getVehicle() instanceof Pig) {
+        if (pigsByPlayers.containsKey(player.getName()) && event.getVehicle() instanceof Pig) {
             //отмена евенту
             player.sendMessage(ChatColor.RED + noEscape);
             event.setCancelled(true);
         }
 
     }
+
+    @EventHandler
+    private void joinWorld(PlayerJoinEvent event) {
+
+        if(pigsByPlayers.containsKey(event.getPlayer().getName())){
+            Player player = event.getPlayer();
+            Pig pig =pigsByPlayers.get(player.getName());
+            if(event.getPlayer().getWorld().equals(pig.getWorld())){
+                pig.addPassenger(player);
+            }
+        }
+    }
+
+    @EventHandler
+    private void changeWorld(PlayerChangedWorldEvent event) {
+        if(pigsByPlayers.containsKey(event.getPlayer().getName())){
+            Player player = event.getPlayer();
+            Pig pig =pigsByPlayers.get(player.getName());
+          if(event.getPlayer().getWorld().equals(pig.getWorld())){
+              pig.addPassenger(player);
+            }
+        }
+    }
+
 
     //Пробує пересісти
     @EventHandler
@@ -124,16 +141,11 @@ public class Events implements Listener {
         //Для перезаходу гравців
         if (event.getVehicle() instanceof Pig pig) {
             if (!pig.hasSaddle()) {
-                if (!sittingPlayers.contains(player.getName())) {
-                    sittingPlayers.add(player.getName());
-                    pigsByPlayers.remove(player.getName());
-                    pigsByPlayers.put(player.getName(),(Pig) event.getVehicle());
-                }
                 return;
             }
         }
 
-        if (sittingPlayers.contains(player.getName())) {
+        if (pigsByPlayers.containsKey(player.getName())) {
             //отмена евенту
             player.sendMessage(ChatColor.RED + noEscape);
             event.setCancelled(true);
@@ -145,7 +157,7 @@ public class Events implements Listener {
     @EventHandler
     private void teleportPlayer(PlayerInteractEvent event) {
         Player player = event.getPlayer();
-        if (sittingPlayers.contains(player.getName())) {
+        if (pigsByPlayers.containsKey(player.getName())) {
             player.sendMessage(ChatColor.RED + noEscape);
             event.setCancelled(true);
         }
@@ -176,8 +188,7 @@ public class Events implements Listener {
 
         for (Entity passenger : pig.getPassengers()) {
             if (passenger instanceof Player) {
-                if (sittingPlayers.contains(passenger.getName())) {
-                    sittingPlayers.remove(passenger.getName());
+                if (pigsByPlayers.containsKey(passenger.getName())) {
                     pigsByPlayers.remove(passenger.getName());
                     removeEffects((Player) passenger);
                 }

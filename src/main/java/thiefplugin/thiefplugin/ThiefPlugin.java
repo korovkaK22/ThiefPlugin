@@ -1,6 +1,6 @@
 package thiefplugin.thiefplugin;
 
-import events.Events;
+import events.PigThiefEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -11,7 +11,7 @@ public final class ThiefPlugin extends JavaPlugin {
         // Plugin startup logic
         Bukkit.getLogger().info("ThiefPlugins was enabled");
 
-        new Events(this);
+        new PigThiefEvents(this);
 
     }
 
