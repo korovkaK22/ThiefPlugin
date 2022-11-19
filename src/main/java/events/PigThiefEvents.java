@@ -4,6 +4,7 @@ package events;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -24,13 +25,10 @@ public class PigThiefEvents implements Listener {
     private final String noEscape = "Sit here!";
     private final String newVictim = "Oh no, you were stolen!";
     private final String successThief = "You have successful steal";
-    private final ThiefPlugin plugin;
-   // LinkedList<String> sittingPlayers;
     Map<String, Pig> pigsByPlayers;
 
     public PigThiefEvents(ThiefPlugin plugin) {
         Bukkit.getPluginManager().registerEvents(this, plugin);
-        this.plugin = plugin;
       //  this.sittingPlayers = new LinkedList<>();
         this.pigsByPlayers= new HashMap<>();
     }
@@ -78,7 +76,11 @@ public class PigThiefEvents implements Listener {
         pigsByPlayers.put(victim.getName(),pig);
 
         thief.sendMessage(ChatColor.GREEN + successThief + " " + victim.getName() + " !");
+        thief.playSound(thief, Sound.ENTITY_PLAYER_LEVELUP, 0.9f, 1); //звук ассепта
+
         victim.sendMessage(ChatColor.RED + newVictim);
+        victim.playSound(victim, Sound.ENTITY_VILLAGER_NO, 0.9f, 1);
+
         Bukkit.broadcastMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.ITALIC + thief.getName() + " steal " + victim.getName() + " !");
 
 

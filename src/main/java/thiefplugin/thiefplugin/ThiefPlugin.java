@@ -1,5 +1,6 @@
 package thiefplugin.thiefplugin;
 
+import events.BondageEvents;
 import events.PigThiefEvents;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -12,7 +13,7 @@ public final class ThiefPlugin extends JavaPlugin {
         Bukkit.getLogger().info("ThiefPlugins was enabled");
 
         new PigThiefEvents(this);
-
+        new BondageEvents(this);
     }
 
     @Override
