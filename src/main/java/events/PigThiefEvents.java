@@ -1,6 +1,7 @@
 package events;
 
 
+import items.ThiefItems;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -44,15 +45,18 @@ public class PigThiefEvents implements Listener {
              return;
         }
 
-
-        if (!(event.getPlayer().getInventory().getItemInMainHand().getType() == Material.NETHERITE_SWORD)) {
+        if (!(event.getPlayer().getInventory().getItemInMainHand().getType() == Material.LEAD)) {
             return;
         }
         if (!(event.getRightClicked().getType().equals(EntityType.PLAYER))) {
             return;
         }
-        //садиться
-        makePig((Player) event.getRightClicked(), event.getPlayer());
+
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta()
+                .equals(ThiefItems.getPigLead().getItemMeta())) {
+            //садиться
+            makePig((Player) event.getRightClicked(), event.getPlayer());
+        }
     }
 
 

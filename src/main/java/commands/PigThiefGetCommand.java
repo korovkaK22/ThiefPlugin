@@ -17,7 +17,7 @@ import java.util.List;
 public class PigThiefGetCommand implements TabExecutor {
     private final  String exception = "Correct usage: /thief <get> <item>";
     private final  List<String> atr1 = Arrays.asList("get");
-    private final  List<String> atr2 = Arrays.asList("pigThief", "standLead");
+    private final  List<String> atr2 = Arrays.asList("pigThief", "playerBondage");
 
     public PigThiefGetCommand() {
     }

@@ -1,6 +1,7 @@
 package thiefplugin.thiefplugin;
 
 import commands.PigThiefGetCommand;
+import craft.ThiefCraft;
 import events.BondageEvents;
 import events.PigThiefEvents;
 import org.bukkit.Bukkit;
@@ -20,6 +21,7 @@ public final class ThiefPlugin extends JavaPlugin {
         getCommand("thief").setExecutor(new PigThiefGetCommand());
         getCommand("thief").setTabCompleter(new PigThiefGetCommand());
 
+        new ThiefCraft();
     }
 
     @Override

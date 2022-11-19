@@ -21,16 +21,17 @@ public static ItemStack getPigLead(){
         leadMeta.addEnchant(Enchantment.MENDING,1,false);
         leadMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         leadMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6Player Lead"));
+        leadMeta.setCustomModelData(1);
 
         List<String> lores = new ArrayList<>();
         lores.add(ChatColor.translateAlternateColorCodes('&', "&0&dWith this you can"));
         lores.add(ChatColor.translateAlternateColorCodes('&', "&0&dsteal players :)"));
         leadMeta.setLore(lores);
 
-
         lead.setItemMeta(leadMeta);
         return lead;
 }
+
 
         public static ItemStack getBondage(){
                 ItemStack lead = new ItemStack(Material.STRING,1);
@@ -38,6 +39,7 @@ public static ItemStack getPigLead(){
                 leadMeta.addEnchant(Enchantment.MENDING,1,false);
                 leadMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
                 leadMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6Player Bondage"));
+                leadMeta.setCustomModelData(1);
 
                 List<String> lores = new ArrayList<>();
                 lores.add(ChatColor.translateAlternateColorCodes('&', "&0&dWith this you can"));
