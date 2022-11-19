@@ -15,12 +15,12 @@ public class ThiefItems {
     public ThiefItems() {
     }
 
-public ItemStack getLead(){
+public static ItemStack getPigLead(){
         ItemStack lead = new ItemStack(Material.LEAD,1);
         ItemMeta leadMeta = lead.getItemMeta();
         leadMeta.addEnchant(Enchantment.MENDING,1,false);
         leadMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        leadMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6Lead"));
+        leadMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6Player Lead"));
 
         List<String> lores = new ArrayList<>();
         lores.add(ChatColor.translateAlternateColorCodes('&', "&0&dWith this you can"));
@@ -32,6 +32,21 @@ public ItemStack getLead(){
         return lead;
 }
 
+        public static ItemStack getBondage(){
+                ItemStack lead = new ItemStack(Material.STRING,1);
+                ItemMeta leadMeta = lead.getItemMeta();
+                leadMeta.addEnchant(Enchantment.MENDING,1,false);
+                leadMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+                leadMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6Player Bondage"));
+
+                List<String> lores = new ArrayList<>();
+                lores.add(ChatColor.translateAlternateColorCodes('&', "&0&dWith this you can"));
+                lores.add(ChatColor.translateAlternateColorCodes('&', "&0&dbondage players :)"));
+                leadMeta.setLore(lores);
+
+                lead.setItemMeta(leadMeta);
+                return lead;
+        }
 
 
 }

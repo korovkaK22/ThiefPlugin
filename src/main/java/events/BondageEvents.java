@@ -1,5 +1,6 @@
 package events;
 
+import items.ThiefItems;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
@@ -21,14 +22,18 @@ public class BondageEvents implements Listener {
     //Початок викрадення
     @EventHandler
     private void thiefPlayer(PlayerInteractAtEntityEvent event) {
-        if (!(event.getPlayer().getInventory().getItemInMainHand().getType() == Material.NETHERITE_SHOVEL)) {
+        if (!(event.getPlayer().getInventory().getItemInMainHand().getType() == Material.STRING)) {
             return;
         }
         if (!(event.getRightClicked().getType().equals(EntityType.PLAYER))) {
             return;
         }
         //бундаж
-        bondagePlayer((Player) event.getRightClicked(), event.getPlayer());
+
+        if (event.getPlayer().getInventory().getItemInMainHand().getItemMeta()
+                .equals(ThiefItems.getBondage().getItemMeta())) {
+            bondagePlayer((Player) event.getRightClicked(), event.getPlayer());
+        }
     }
 
 

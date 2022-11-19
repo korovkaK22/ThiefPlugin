@@ -2,3 +2,17 @@ name: ThiefPlugins
 version: '${version}'
 main: thiefplugin.thiefplugin.ThiefPlugin
 api-version: 1.19
+
+
+commands:
+  thief:
+    description: get thief things.
+    usage: /thief
+    permission: thiefplugin.thief
+    permission-message: You are not permitted to do that
+
+
+permissions:
+  thiefplugin.thief:
+    description: get this stone
+    default: op
